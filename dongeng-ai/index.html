@@ -1,267 +1,106 @@
-```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dongeng AI Anak</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dongeng AI Anak - Kreatif & Ajaib</title>
+    <style>
+        :root { --primary: #2563eb; --accent: #f97316; --success: #10b981; --danger: #ef4444; }
+        
+        body { background: #f8fafc; font-family: 'Segoe UI', sans-serif; color: #334155; padding: 20px; line-height: 1.6; }
+        
+        .container { max-width: 1100px; margin: 40px auto; display: grid; grid-template-columns: 1fr 400px; gap: 40px; align-items: start; }
+        
+        .hero img { width: 100%; border-radius: 20px; transition: transform 0.3s ease; }
+        .hero img:hover { transform: scale(1.02); }
 
-<style>
+        .form-box { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        h1 { color: var(--primary); margin-bottom: 15px; font-size: 1.8rem; }
+        
+        .input-group { margin-bottom: 20px; }
+        label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem; }
+        input, select { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; transition: border-color 0.3s; }
+        input:focus { border-color: var(--primary); outline: none; }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Segoe UI',sans-serif;
-}
+        button { width: 100%; padding: 14px; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; margin-top: 10px; transition: opacity 0.2s; }
+        button:hover { opacity: 0.9; }
+        .generate { background: var(--accent); color: white; }
+        .play { background: var(--success); color: white; }
+        .stop { background: var(--danger); color: white; }
 
-body{
-background:#eef4fa;
-min-height:100vh;
-padding:30px;
-}
+        #hasil { margin-top: 25px; padding: 20px; background: #f1f5f9; border-radius: 15px; display: none; max-height: 400px; overflow-y: auto; font-style: italic; }
 
-.container{
-max-width:1400px;
-margin:auto;
-display:grid;
-grid-template-columns:1.2fr 450px;
-gap:50px;
-align-items:center;
-}
-
-.hero img{
-width:100%;
-max-width:900px;
-display:block;
-}
-
-.form-box{
-background:white;
-padding:35px;
-border-radius:24px;
-box-shadow:0 20px 50px rgba(0,0,0,.08);
-}
-
-h1{
-color:#2563eb;
-margin-bottom:10px;
-}
-
-.subtitle{
-color:#64748b;
-margin-bottom:25px;
-line-height:1.6;
-}
-
-.input-group{
-margin-bottom:18px;
-}
-
-label{
-display:block;
-margin-bottom:8px;
-font-weight:600;
-}
-
-input,
-select{
-width:100%;
-padding:14px;
-border:2px solid #e2e8f0;
-border-radius:12px;
-font-size:16px;
-}
-
-button{
-width:100%;
-padding:16px;
-border:none;
-border-radius:12px;
-font-size:17px;
-font-weight:bold;
-cursor:pointer;
-margin-top:10px;
-}
-
-.generate{
-background:#f97316;
-color:white;
-}
-
-.play{
-background:#10b981;
-color:white;
-}
-
-.stop{
-background:#ef4444;
-color:white;
-}
-
-#hasil{
-margin-top:25px;
-padding:20px;
-background:#f8fafc;
-border-radius:14px;
-line-height:1.8;
-white-space:pre-wrap;
-display:none;
-max-height:500px;
-overflow-y:auto;
-}
-
-.loading{
-text-align:center;
-padding:20px;
-}
-
-@media(max-width:1000px){
-
-.container{
-grid-template-columns:1fr;
-}
-
-}
-
-</style>
+        @media(max-width: 900px) { .container { grid-template-columns: 1fr; } }
+    </style>
 </head>
-
 <body>
 
 <div class="container">
-
-<div class="hero">
-<img src="https://i.imgur.com/Z2wnGBz.png">
-</div>
-
-<div class="form-box">
-
-<h1>📚 Dongeng AI Anak</h1>
-
-<p class="subtitle">
-Buat dongeng personal dimana anak menjadi tokoh utama.
-</p>
-
-<div class="input-group">
-<label>Nama Anak</label>
-<input id="nama" type="text">
-</div>
-
-<div class="input-group">
-<label>Usia Anak</label>
-<input id="usia" type="number">
-</div>
-
-<div class="input-group">
-<label>Tema Cerita</label>
-<select id="tema">
-<option>Petualangan</option>
-<option>Persahabatan</option>
-<option>Fantasi</option>
-<option>Hewan</option>
-<option>Islami</option>
-<option>Sebelum Tidur</option>
-<option>Keberanian</option>
-</select>
-</div>
-
-<button class="generate" onclick="generateDongeng()">
-🎙 Buat Dongeng
-</button>
-
-<button class="play" onclick="playStory()">
-🔊 Dengarkan Dongeng
-</button>
-
-<button class="stop" onclick="stopStory()">
-⏹ Stop
-</button>
-
-<div id="hasil"></div>
-
-</div>
-
+    <div class="hero">
+        <img src="https://i.imgur.com/Z2wnGBz.png" alt="Dongeng Anak">
+    </div>
+    <div class="form-box">
+        <h1>✨ Dongeng AI Anak</h1>
+        <p>Ciptakan cerita ajaib untuk si kecil.</p>
+        <div class="input-group">
+            <label>Nama Anak</label>
+            <input id="nama" type="text" placeholder="Masukkan nama...">
+        </div>
+        <div class="input-group">
+            <label>Usia</label>
+            <input id="usia" type="number" placeholder="Contoh: 5">
+        </div>
+        <div class="input-group">
+            <label>Tema Cerita</label>
+            <select id="tema">
+                <option>Petualangan</option>
+                <option>Persahabatan</option>
+                <option>Fantasi</option>
+            </select>
+        </div>
+        <button class="generate" onclick="generateDongeng()">🎙 Buat Dongeng</button>
+        <button class="play" onclick="playStory()">🔊 Dengarkan</button>
+        <button class="stop" onclick="stopStory()">⏹ Berhenti</button>
+        <div id="hasil"></div>
+    </div>
 </div>
 
 <script>
+    async function generateDongeng() {
+        const nama = document.getElementById('nama').value;
+        const usia = document.getElementById('usia').value;
+        const tema = document.getElementById('tema').value;
+        const hasil = document.getElementById('hasil');
 
-async function generateDongeng(){
+        if(!nama || !usia) return alert("Mohon lengkapi nama dan usia!");
 
-const nama =
-document.getElementById('nama').value;
+        hasil.style.display = 'block';
+        hasil.innerText = '⏳ Sedang merangkai kata-kata ajaib...';
 
-const usia =
-document.getElementById('usia').value;
+        try {
+            const response = await fetch('/api/generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nama, usia, tema })
+            });
+            const data = await response.json();
+            hasil.innerText = data.cerita;
+        } catch(error) {
+            hasil.innerText = '❌ Ups, sepertinya imajinasi AI sedang istirahat. Coba lagi nanti!';
+        }
+    }
 
-const tema =
-document.getElementById('tema').value;
+    function playStory() {
+        const text = document.getElementById('hasil').innerText;
+        if(!text || text.includes('⏳') || text.includes('❌')) return;
+        window.speechSynthesis.cancel();
+        const speech = new SpeechSynthesisUtterance(text);
+        speech.lang = 'id-ID';
+        speech.rate = 0.9;
+        window.speechSynthesis.speak(speech);
+    }
 
-const hasil =
-document.getElementById('hasil');
-
-hasil.style.display='block';
-
-hasil.innerHTML='⏳ Sedang membuat dongeng...';
-
-try{
-
-const response = await fetch('/api/generate',{
-method:'POST',
-headers:{
-'Content-Type':'application/json'
-},
-body:JSON.stringify({
-nama,
-usia,
-tema
-})
-});
-
-const data = await response.json();
-
-hasil.innerText = data.cerita;
-
-}
-catch(error){
-
-hasil.innerText =
-'❌ Gagal membuat dongeng';
-
-console.log(error);
-
-}
-
-}
-
-function playStory(){
-
-const text =
-document.getElementById('hasil').innerText;
-
-if(!text) return;
-
-window.speechSynthesis.cancel();
-
-const speech =
-new SpeechSynthesisUtterance(text);
-
-speech.lang='id-ID';
-
-speech.rate=0.9;
-
-window.speechSynthesis.speak(speech);
-
-}
-
-function stopStory(){
-
-window.speechSynthesis.cancel();
-
-}
-
+    function stopStory() { window.speechSynthesis.cancel(); }
 </script>
-
 </body>
 </html>
-```
